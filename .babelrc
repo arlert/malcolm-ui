@@ -1,0 +1,24 @@
+{
+
+    // "cacheDirectory": true,
+    "plugins": [
+        // "react-hot-loader/babel",π
+        "transform-runtime", "transform-decorators-legacy", ["import", [{
+            "libraryName": "antd",
+            "style": true
+        }]]
+    ],
+    "presets": [
+        "es2015",
+        "react"
+    ],
+    "ignore": [
+        "node_modules",
+        "build",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "src/setupTests.ts",
+        "jest"
+    ]
+}
