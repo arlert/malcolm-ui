@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-2">
+        <md-sidenav #sidenav mode="side" opened="true">
+            <md-nav-list *ngIf="build">
+                <md-list-item *ngIf="logOn" (click)="toogleLog()">Log Off </md-list-item>
+                <md-list-item *ngIf="!logOn" (click)="toogleLog()"> Log On </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item *ngIf="canPause()" (click)="pause()">Pause Build</md-list-item>
+                <md-list-item *ngIf="canResume()" (click)="resume()">Resume Build</md-list-item>
+                <md-list-item *ngIf="canStop()" (click)="stop()">Stop Build</md-list-item>
+                <md-divider></md-divider>
+            </md-nav-list>
+        </md-sidenav>
+    </div>
+    <div class="col-md-10" *ngIf="build">
+        <md-toolbar>Build #{{build.ID}}</md-toolbar>
+        <table width="100%" cellpadding="0" cellspacing="0" class="table ">
+            <tr>
+                <td>Title:</td>
+                <td>{{build.Title}}</td>
+            </tr>
+            <tr>
+                <td> Description:</td>
+                <td>{{ build.Description }}</td>
+            </tr>
+            <tr>
+                <td>CurrentStep:</td>
+                <td>{{ build.CurrentStep }}</td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td>{{build.Status.State}} - {{build.Status.StateDetail}} </td>
+            </tr>
+            <tr>
+                <td> Started:</td>
+                <td> {{build.Started| date:'yyyy-MM-dd HH:mm:ss'}} </td>
+            </tr>
+        </table>
+        <md-toolbar>Steps</md-toolbar>
+        <ngx-datatable *ngIf="build" [rows]="build.Steps" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" class="material striped ngx-datatable fixed-header fixed-row">
+            <ngx-datatable-column name="ID">
+                <ng-template ngx-datatable-header-template>
+                    Step No
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.StepNo}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Title">
+                <ng-template ngx-datatable-header-template>
+                    Title
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Title}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Started">
+                <ng-template ngx-datatable-header-template>
+                    Started
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Started| date:'yyyy-MM-dd HH:mm:ss'}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Finished">
+                <ng-template ngx-datatable-header-template>
+                    Finished
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Finished| date:'yyyy-MM-dd HH:mm:ss'}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+                <ng-template ngx-datatable-header-template>
+                    Status
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Status.State}} {{row.Status.StateDetail}}
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

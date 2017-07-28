@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-2">
+        <md-sidenav #sidenav mode="side" opened="true">
+            <md-nav-list>
+                <md-list-item (click)="newbuild()"> Build Now </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item *ngIf="refreshOn" (click)="stopRefresh()">AutoRefresh Off </md-list-item>
+                <md-list-item *ngIf="!refreshOn" (click)="refresh()"> AutoRefresh On </md-list-item>
+                <md-divider></md-divider>
+            </md-nav-list>
+        </md-sidenav>
+    </div>
+    <div class="col-md-10">
+        <md-toolbar>Builds</md-toolbar>
+        <ngx-datatable [rows]="builds" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" class="material striped ngx-datatable fixed-header fixed-row">
+            <ngx-datatable-column name="ID">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a href="/pipebuilds/{{row.PipeID}}/build/{{row.ID}}">{{row.ID}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Title">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Title}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Description">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Description}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Started">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Started| date:'yyyy-MM-dd HH:mm:ss'}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Finished">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name }}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Finished| date:'yyyy-MM-dd HH:mm:ss'}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Status.State}} {{row.Status.StateDetail}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    Action
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a *ngIf="canPause(row)" md-raised-button (click)="pause(row)">pause</a>
+                    <a *ngIf="canResume(row)" md-raised-button (click)="resume(row)">resume</a>
+                    <a *ngIf="canStop(row)" md-raised-button (click)="stop(row)">stop</a>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
