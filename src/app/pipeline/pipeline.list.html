@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-2">
+        <md-sidenav #sidenav mode="side" opened="true">
+            <md-nav-list>
+                <md-list-item (click)="newpipe()"> New Pipeline </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item (click)="config()"> Config </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item (click)="queue()"> Queue </md-list-item>
+                <md-divider></md-divider>
+            </md-nav-list>
+        </md-sidenav>
+    </div>
+    <div class="col-md-10">
+        <md-toolbar>Pipelines</md-toolbar>
+        <ngx-datatable [rows]="pipelines" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" class="material striped ngx-datatable fixed-header fixed-row">
+            <ngx-datatable-column name="ID">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a href="/pipebuilds/{{row.ID}}">{{row.ID}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Title">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Title}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Description">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Description}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Updated">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{column.name}}
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Updated}}
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
