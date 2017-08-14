@@ -31,37 +31,3 @@ export class Task {
 }
 
 
-// Build is a running/runned instance of pipe
-export class Build {
-    ID: string;
-    // Trigger  :string;
-    Title: string;
-    Description: string;
-    Project: string;
-    // Status      BuildStatus
-    Started: Date;
-    Finished: Date;
-    Updated: Date;
-    Works: Work[];
-    Author: string;
-}
-
-// Work is a instance of build, a single build may trigger multiple work
-export class Work {
-    WorkNo: number;
-    Title: string;
-    Description: string;
-    // Status      WorkStatus
-    Started: Date;
-    Finished: Date;
-    Steps: WorkStep[];
-}
-
-// WorkStep is a step during a Work
-export class WorkStep {
-    StepNo: number;
-    Title: string;
-    // Status   StepStatus
-    Started: Date;
-    Finished: Date;
-}
