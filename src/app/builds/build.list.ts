@@ -31,7 +31,11 @@ export class BuildListComponent implements OnInit, OnDestroy {
         this.route.params
             .switchMap((params: Params) => {
                 this.pipeid = params['id'];
-                return this.buildService.getBuilds(this.pipeid);
+                if (this.pipeid === 'running') {
+                    return this.buildService.getBuildQueue();
+                } else {
+                    return this.buildService.getBuilds(this.pipeid);
+                }
             })
             .subscribe((builds: Build[]) => {
                 this.builds = builds;
@@ -47,7 +51,13 @@ export class BuildListComponent implements OnInit, OnDestroy {
     refresh(): void {
         this.refreshOn = true;
         this.timer = setInterval(() => {
-            if (this.pipeid) {
+            if (this.pipeid === 'running') {
+                this.buildService.getBuildQueue().then(
+                    (builds: Build[]) => {
+                        this.builds = builds;
+                    }
+                );
+            } else if (this.pipeid) {
                 this.buildService.getBuilds(this.pipeid).then(
                     (builds: Build[]) => {
                         this.builds = builds;
@@ -71,14 +81,14 @@ export class BuildListComponent implements OnInit, OnDestroy {
     }
 
     pause(build: Build): void {
-        this.buildService.patchBuild(this.pipeid, build.ID, 'pause').then(
+        this.buildService.patchBuild(build.PipeID, build.ID, 'pause').then(
             (buildout: Build) => {
                 alert('pause build success ' + buildout.ID);
             }
         );
     }
     resume(build: Build): void {
-        this.buildService.patchBuild(this.pipeid, build.ID, 'resume').then(
+        this.buildService.patchBuild(build.PipeID, build.ID, 'resume').then(
             (buildout: Build) => {
                 alert('resume build success ' + buildout.ID);
             }
@@ -86,7 +96,7 @@ export class BuildListComponent implements OnInit, OnDestroy {
     }
 
     stop(build: Build): void {
-        this.buildService.patchBuild(this.pipeid, build.ID, 'stop').then(
+        this.buildService.patchBuild(build.PipeID, build.ID, 'stop').then(
             (buildout: Build) => {
                 alert('stop build success ' + buildout.ID);
             }
