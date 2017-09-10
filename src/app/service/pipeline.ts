@@ -7,6 +7,7 @@ import { Http } from '@angular/http';
 @Injectable()
 export class PipelineService {
     private pipelineUrl = 'http://malcolm-cs.qiniu.io/v1/pipe';  // URL to web api
+
     constructor(private http: Http, ) { }
 
     getPipelines(): Promise<Pipeline[]> {

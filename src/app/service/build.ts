@@ -7,6 +7,7 @@ import { Http } from '@angular/http';
 @Injectable()
 export class BuildService {
     private pipelineUrl = 'http://malcolm-cs.qiniu.io/v1/pipe';  // URL to web api
+    private queueUrl = 'http://malcolm-cs.qiniu.io/v1/build/queue';
     constructor(private http: Http) { }
 
     getBuilds(pipeid: string): Promise<Build[]> {
@@ -35,6 +36,13 @@ export class BuildService {
             '/build/' + buildid + '?action=' + action, null)
             .toPromise()
             .then(response => response.json() as Build)
+            .catch(this.handleError);
+    }
+
+    getBuildQueue(): Promise<Build[]> {
+        return this.http.get(this.queueUrl, null)
+            .toPromise()
+            .then(response => response.json() as Build[])
             .catch(this.handleError);
     }
 

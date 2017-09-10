@@ -2,8 +2,8 @@
     <div class="col-md-2">
         <md-sidenav #sidenav mode="side" opened="true">
             <md-nav-list>
-                <md-list-item (click)="newbuild()"> Build Now </md-list-item>
-                <md-divider></md-divider>
+                <md-list-item *ngIf="pipeid != 'running'" (click)="newbuild()"> Build Now </md-list-item>
+                <md-divider *ngIf="pipeid != 'running'"></md-divider>
                 <md-list-item *ngIf="refreshOn" (click)="stopRefresh()">AutoRefresh Off </md-list-item>
                 <md-list-item *ngIf="!refreshOn" (click)="refresh()"> AutoRefresh On </md-list-item>
                 <md-divider></md-divider>
